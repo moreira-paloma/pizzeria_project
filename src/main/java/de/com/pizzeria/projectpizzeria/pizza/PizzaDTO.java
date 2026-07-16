@@ -1,41 +1,20 @@
 package de.com.pizzeria.projectpizzeria.pizza;
 
-import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
-@Entity // pesquisar JPA
-@Table(name="Pizza") // tabela pizza no banco de dados
-public class PizzaModel {
+public class PizzaDTO {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) //primary key e geracao automatica de id
-    private Long id;
+    @NotBlank
     private String nome;
-    @Enumerated(EnumType.STRING)
     private SaborEnum sabor;
-    @Enumerated(EnumType.STRING)
     private TamanhoEnum tamanho;
+    @NotNull
+    @Positive
     private Double preco;
+    @NotNull
     private Boolean disponivel;
-
-    public PizzaModel() {
-
-    }
-
-    public PizzaModel(Long id, String nome, SaborEnum sabor, TamanhoEnum tamanho, Double preco, Boolean disponivel) {
-        this.id = id;
-        this.nome = nome;
-        this.sabor = sabor;
-        this.tamanho = tamanho;
-        this.preco = preco;
-        this.disponivel = disponivel;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getNome() {
         return nome;
