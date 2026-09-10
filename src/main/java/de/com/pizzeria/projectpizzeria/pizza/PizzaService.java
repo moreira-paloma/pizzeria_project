@@ -2,8 +2,10 @@ package de.com.pizzeria.projectpizzeria.pizza;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import java.util.List;
+
 
 @Service
 public class PizzaService {
@@ -19,16 +21,16 @@ public class PizzaService {
     //revisar, jogar no gpt.
     public PizzaDTO criarPizza(PizzaDTO pizzaDto){
        PizzaModel pizzaModel = modelMapper.map(pizzaDto,PizzaModel.class);
-        repository.save(pizzaModel);
-        return modelMapper.map(pizzaModel,PizzaDTO.class);
+       PizzaModel pizzaSalva = repository.save(pizzaModel);
+       PizzaDTO pizzaCriada = modelMapper.map(pizzaSalva,PizzaDTO.class);
+        return pizzaCriada;
 
     }
     //pesquisar
-    public List<PizzaDTO> buscarTodos(){
-        return repository.findAll()
-                .stream(). //pegar a lista de entidades e colocar no fluxo com o stream.
-                map(pizzaModel -> modelMapper.map(pizzaModel,PizzaDTO.class))
-                .toList();
+    public Page<PizzaDTO> buscarTodos(Pageable paginacao){
+        return repository.findAll(paginacao).map(pizzaModel ->
+                modelMapper.map(pizzaModel,PizzaDTO.class));
+
     }
 
     public PizzaDTO buscarPorId(Long id){
@@ -48,5 +50,28 @@ public class PizzaService {
     public void deletar(Long id){
         repository.deleteById(id);
     }
+
+    public PizzaDTO atualizarParcial(Long id, PizzaDTO dto) {
+
+        PizzaModel pizza = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Pizza não encontrada"));
+
+        if (dto.getNome() != null) {
+            pizza.setNome(dto.getNome());
+        }
+        if (dto.getTamanho() != null) {
+            pizza.setTamanho(dto.getTamanho());
+        }
+        if (dto.getPreco() != null) {
+            pizza.setPreco(dto.getPreco());
+        }
+        if (dto.getSabor() != null) {
+            pizza.setSabor(dto.getSabor());
+        }
+
+        PizzaModel salvo = repository.save(pizza);
+        return modelMapper.map(salvo, PizzaDTO.class);
+    }
+
 }
 

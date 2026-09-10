@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Positive;
 
 public class PizzaDTO {
 
+    private Long id;
     @NotBlank
     private String nome;
     private SaborEnum sabor;
@@ -54,5 +55,13 @@ public class PizzaDTO {
 
     public void setDisponivel(Boolean disponivel) {
         this.disponivel = disponivel;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

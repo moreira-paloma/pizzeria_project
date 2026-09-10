@@ -5,6 +5,8 @@ public enum SaborEnum {
     QUATROQUEIJOS,
     MARGARITA,
     CHOCOLATE,
-    MORANGO
+    MORANGO,
+    QUEIJO,
+    ALHOPORO
 
 }
