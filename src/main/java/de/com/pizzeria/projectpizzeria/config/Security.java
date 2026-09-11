@@ -25,6 +25,6 @@ public class Security {
         return configuration.getAuthenticationManager();
     }
 
-    // colocar na ia esse codigo e explicar os porques.
+
 
 }

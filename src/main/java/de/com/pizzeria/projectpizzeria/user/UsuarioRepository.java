@@ -1,9 +1,10 @@
 package de.com.pizzeria.projectpizzeria.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.security.core.userdetails.UserDetails;
 
-public interface UsuarioRepository extends JpaRepository<UsuarioModel,Long> {
+import java.util.Optional;
 
-   public UserDetails findByLogin(String login);
+public interface UsuarioRepository extends JpaRepository<UsuarioModel, Long> {
+
+   Optional<UsuarioModel> findByLogin(String login);
 }
