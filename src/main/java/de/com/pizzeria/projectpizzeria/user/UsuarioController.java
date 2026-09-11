@@ -26,15 +26,12 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<UsuarioDTO> cadastrarUsuario(@RequestBody @Valid UsuarioDTO usuarioDTO) {
-        UsuarioModel usuario = new UsuarioModel();
-        usuario.setLogin(usuarioDTO.getLogin());
-        usuario.setSenha(usuarioDTO.getSenha());
+    public ResponseEntity<UsuarioDTO> cadastrarUsuario(@RequestBody @Valid UsuarioDTO usuarioDTO,UriComponentsBuilder uriComponentsBuilder) {
+       UsuarioDTO usuarioCriado = usuarioService.criarUsuario(usuarioDTO);
+        URI endereco = uriComponentsBuilder.path("/usuarios/{id}").buildAndExpand(usuarioCriado.getId()).toUri();
+        return ResponseEntity.created(endereco).body(usuarioCriado);
 
-        usuarioRepository.save(usuario);
-
-        return ResponseEntity.ok(usuarioDTO);
     }
-    //finalizar o metodo de cadastro
+
 }
 

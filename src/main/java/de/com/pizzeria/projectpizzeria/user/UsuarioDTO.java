@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 public class UsuarioDTO {
 
     @NotBlank
+    private Long id;
+    @NotBlank
     private String login;
     @NotBlank
     private String senha;
@@ -23,5 +25,13 @@ public class UsuarioDTO {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
